@@ -1,16 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Graph : MonoBehaviour
 {
-    [SerializeField]
-    Transform pointPrefab;
+    [SerializeField] private Transform pointPrefab;
 
-    [SerializeField, Range(10, 100)]
-    int resolution = 10;
+    [SerializeField, Range(10, 100)] private int resolution = 10;
 
     private Transform[] points;
+    private GraphManager graphManager;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +15,9 @@ public class Graph : MonoBehaviour
         float step = 2f / resolution;
         Vector3 position = Vector3.zero;
         Vector3 scale = Vector3.one * step;
+
         points = new Transform[resolution];
+        graphManager = FindObjectOfType<GraphManager>();
 
         for (int i = 0; i < points.Length; i++)
         {
@@ -38,7 +37,7 @@ public class Graph : MonoBehaviour
         {
             Transform point = points[i];
             Vector3 position = point.localPosition;
-            position.y = Mathf.Sin(Mathf.PI * (position.x + time));
+            position.y = position.x - time;
             point.localPosition = position;
         }
     }
